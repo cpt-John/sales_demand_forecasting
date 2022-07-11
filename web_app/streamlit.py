@@ -80,7 +80,11 @@ st.markdown("<h1 style='text-align: center; margin-top:0; padding:0'>Item Sales 
 st.markdown(" <p style='text-align: center'> This app predicts the data using a hyper model \
 | The csv file can be found along with the source code \
 | There is also a EDA notebook along with the source</p>", unsafe_allow_html=True)
-
+st.markdown(
+    """<div style='display: flex;flex-direction: row;justify-content:center'><a href="https://github.com/cpt-John/sales_demand_forecasting">\
+        Source Code</a><div style='padding-inline:0.5em'> | </div><a href="https://cpt-john.github.io/">Portfolio</a></div>
+    """, unsafe_allow_html=True
+)
 r1c1, r1c2, r1c3 = st.columns((1, 3, 3))
 r2c1, r2c2, r2c3, r2c4, r2c5 = st.columns((1, 1.5, 1.5, 1.5, 1.5))
 
