@@ -9,7 +9,7 @@ st.set_page_config(
     page_icon="📊", page_title="Sales Forecast App", layout="wide")
 
 
-def plot_all_items(
+def plot_all(
     source, x="date", y="sales", group="item", axis_scale="linear",
 ):
 
@@ -19,16 +19,16 @@ def plot_all_items(
 
     lines = (
         (
-            alt.Chart(source, )
+            alt.Chart(source,)
             .mark_line(point=True)
             .encode(
                 x=x,
-                y=alt.Y("sales", scale=alt.Scale(type=f"{axis_scale}")),
+                y=alt.Y(y, scale=alt.Scale(type=f"{axis_scale}")),
                 color=group,
                 tooltip=[
-                    "date",
-                    "item",
-                    "sales",
+                    x,
+                    group,
+                    y,
                     alt.Tooltip("delta", format=".2%"),
                 ],
             )
@@ -44,8 +44,8 @@ def plot_all_items(
         .encode(
             y=group,
             color=group,
-            x=alt.X("sales:Q", scale=alt.Scale(type=f"{axis_scale}")),
-            tooltip=["date", "sales", alt.Tooltip("delta", format=".2%")],
+            x=alt.X(f"{y}:Q", scale=alt.Scale(type=f"{axis_scale}")),
+            tooltip=[x, y, alt.Tooltip("delta", format=".2%")],
         )
         .transform_filter(brush)
         .properties(width=550)
@@ -77,7 +77,7 @@ st.markdown(
     '<style>.block-container{padding-top: 1.3em;padding-bottom: 2em;}</style>', unsafe_allow_html=True)
 st.markdown("<h1 style='text-align: center; margin-top:0; padding:0'>Item Sales Prediction</h1>",
             unsafe_allow_html=True)
-st.markdown(" <p style='text-align: center'> This app predicts the data using a hyper model \
+st.markdown(" <p style='text-align: center'> This app predicts the data using a hybrid model \
 | The csv file can be found along with the source code \
 | There is also a EDA notebook along with the source</p>", unsafe_allow_html=True)
 st.markdown(
@@ -141,11 +141,11 @@ filtered_df = df[
 ]
 
 with r1c2:
-    st.altair_chart(plot_all_items(filtered_df),
+    st.altair_chart(plot_all(filtered_df),
                     use_container_width=True)
 
 with r1c3:
-    st.header("Hyper Model Components")
+    st.header("Hybrid Model Components")
 
 with r2c4:
     selected_component_item = st.selectbox(
@@ -153,12 +153,19 @@ with r2c4:
         select_items,
         index=0,)
 
+hybrid_models_info = """
+rf   - Random Forest (residual)\n
+poly - Polynomial (weekly trend)\n
+fft  - Fourier Transform (yearly trend)\n
+reg  - Linear Regression (overall trend)
+"""
 with r2c5:
     summation = st.checkbox("View Summation")
     select_components = st.multiselect(
         "Select Components to add",
         ['rf', "poly", "fft", "reg", ],
         default=[],
+        help=hybrid_models_info
     )
 componets_df = filtered_df[filtered_df['item'] == selected_component_item]
 value_vars = ['rf', "poly", "fft", "reg", ]
@@ -166,11 +173,11 @@ if len(select_components) and summation:
     componets_df["total"] = componets_df[select_components].sum(axis=1)
     value_vars = value_vars+["total"]
 componets_df = pd.melt(componets_df, id_vars=['date'], value_vars=value_vars,
-                       var_name='item', value_name='sales').astype({"item": "str"}).set_index("date")
+                       var_name='model', value_name='sales').astype({"model": "str"}).set_index("date")
 componets_df["delta"] = componets_df.groupby(
-    ["item"])["sales"].pct_change().fillna(0)
+    ["model"])["sales"].pct_change().fillna(0)
 componets_df['date'] = componets_df.index
 
 with r1c3:
-    st.altair_chart(plot_all_items(componets_df,),
+    st.altair_chart(plot_all(componets_df, group="model"),
                     use_container_width=True)
