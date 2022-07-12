@@ -52,7 +52,7 @@ Here's what is covered:
 
 - Basic loading and cleaning of the data set
 - Useful plots and EDA
-- Hyper Modeling and Grid Search for fitting the best model
+- Hybrid Modeling and Grid Search for fitting the best model
 - A web app complete with front end and back end ready for deployment
 
 Use the `model.ipynb` to get started.

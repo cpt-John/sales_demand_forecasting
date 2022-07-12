@@ -90,13 +90,13 @@ def run_to_serialize():
         mask = X['item'] == item
         X_ = X[mask]
         y_ = y[mask]
-        poly_model = RegressionModel(2)
+        poly_model = RegressionModel(4)
         poly_model.fit(X_["day_of_week"], y_)
         poly_models[item] = \
             poly_model.get_reg_poly()(np.arange(7))
         #   DeTrend
         y.loc[mask] = y.loc[mask] - \
-            poly_models[item, X.loc[mask, "day_of_week"]-1]
+            poly_models[item, X.loc[mask, "day_of_week"]]
     print("Poly models ready!")
 
     #   RandomForest Model

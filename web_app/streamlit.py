@@ -3,7 +3,7 @@ import streamlit as st
 import altair as alt
 import pandas as pd
 import numpy as np
-from hyper_model import predict, unique_items
+from hybrid_model import predict, unique_items
 
 st.set_page_config(
     page_icon="📊", page_title="Sales Forecast App", layout="wide")
