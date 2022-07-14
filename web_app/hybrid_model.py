@@ -41,6 +41,10 @@ def run_to_serialize():
     df = df.groupby(["date", "item"]).sum().reset_index()
     df.set_index("date", inplace=True)
 
+    #   drop < 2014
+    mask = df.index.year < 2014
+    df = df[~mask]
+
     #   Add new features
     pivot_date = df.index.min()
     unique_items = df['item'].unique().astype(str).tolist()
