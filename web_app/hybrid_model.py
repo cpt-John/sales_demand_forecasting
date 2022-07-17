@@ -29,7 +29,7 @@ unique_items = None
 def run_to_serialize():
     #   load data
 
-    file_path = "./train-sales.csv"
+    file_path = "./streamlit_files/train-sales.csv"
     df = pd.read_csv(file_path, parse_dates=["date"])
 
     #   drop null redundant columns
@@ -116,7 +116,7 @@ def run_to_serialize():
 
 rf_model, poly_models, fft_models, reg_models = [None]*4
 try:
-    data = load('model.joblib')
+    data = load('./streamlit_files/model.joblib')
     rf_model, poly_models, fft_models, reg_models = data['models']
     pivot_date, unique_items = data["variables"]
 except:
@@ -126,7 +126,7 @@ except:
     rf_model, poly_models, fft_models, reg_models = data['models']
     pivot_date, unique_items = data["variables"]
     print('Dumping Model!')
-    dump(data, 'model.joblib')
+    dump(data, './streamlit_files/model.joblib')
 
 
 def run_models(df_: pd.DataFrame):
