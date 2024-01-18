@@ -15,7 +15,7 @@ def add_features(df_, pivot_date):
     df_["day_of_week"] = df_.index.day_of_week
     df_["day_of_year"] = df_.index.day_of_year
     df_["isweekend"] = np.int0(df_.index.weekday > 4)
-    df_["week"] = df_.index.weekofyear
+    df_["week"] = df_.index.isocalendar().week
     df_["month"] = df_.index.month
     df_["quarter"] = df_.index.quarter
     df_["date_id"] = (df_.index-pivot_date).days
