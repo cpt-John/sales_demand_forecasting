@@ -139,9 +139,9 @@ filtered_df = df[
     df["item"].isin(select_items_df["item"])
 ]
 
-# with r1c2:
-#     st.altair_chart(plot_all(filtered_df),
-#                     use_container_width=True)
+with r1c2:
+    st.altair_chart(plot_all(filtered_df),
+                    use_container_width=True)
 
 with r1c3:
     st.header("Hybrid Model Components")
