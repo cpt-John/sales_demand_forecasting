@@ -159,7 +159,7 @@ def predict(start, period, items_to_predict):
         index = pd.date_range(start=start, periods=period)
         predict_df_['date'] = index
         predict_df_['item'] = item
-        predict_df = pd.concat([predict_df, predict_df_, ignore_index=True)
+        predict_df = pd.concat([predict_df, predict_df_)
     predict_df.set_index("date", inplace=True)
     predict_df = add_features(predict_df, pivot_date)
     result_df = run_models(predict_df)
