@@ -66,7 +66,7 @@ def process_df():
     df = df.astype({"item": "str"})
     df["delta"] = (df.groupby(["item"])["sales"].pct_change()).fillna(0)
 
-    final_df = df.groupby(["item"]).rolling(rolling_avg_days).mean(numeric_only=False).dropna()
+    final_df = df.groupby(["item"]).rolling(rolling_avg_days).mean(numeric_only=True).dropna()
     final_df = final_df.reset_index()
     final_df.set_index("date", inplace=True,  drop=False,)
     return final_df
