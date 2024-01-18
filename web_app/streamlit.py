@@ -168,15 +168,15 @@ with r2c5:
     )
 componets_df = filtered_df[filtered_df['item'] == selected_component_item]
 value_vars = ['rf', "poly", "fft", "reg", ]
-if len(select_components) and summation:
-    componets_df["total"] = componets_df[select_components].sum(axis=1)
-    value_vars = value_vars+["total"]
-componets_df = pd.melt(componets_df, id_vars=['date'], value_vars=value_vars,
-                       var_name='model', value_name='sales').astype({"model": "str"}).set_index("date")
-componets_df["delta"] = componets_df.groupby(
-    ["model"])["sales"].pct_change().fillna(0)
-componets_df['date'] = componets_df.index
+# if len(select_components) and summation:
+#     componets_df["total"] = componets_df[select_components].sum(axis=1)
+#     value_vars = value_vars+["total"]
+# componets_df = pd.melt(componets_df, id_vars=['date'], value_vars=value_vars,
+#                        var_name='model', value_name='sales').astype({"model": "str"}).set_index("date")
+# componets_df["delta"] = componets_df.groupby(
+#     ["model"])["sales"].pct_change().fillna(0)
+# componets_df['date'] = componets_df.index
 
-with r1c3:
-    st.altair_chart(plot_all(componets_df, group="model"),
-                    use_container_width=True)
+# with r1c3:
+#     st.altair_chart(plot_all(componets_df, group="model"),
+#                     use_container_width=True)
