@@ -140,14 +140,11 @@ filtered_df = df[
 ]
 
 with r1c2:
-    # Assuming your plot_all function returns an Altair chart
-    chart = plot_all(filtered_df, x="date", y="sales")
-
-    # Specify encoding with channel types
-    chart = chart.encode(
-        x=alt.X("date:T", title="Date"),  # "T" specifies a temporal field
-        y=alt.Y("sales:Q", title="Sales"),  # "Q" specifies a quantitative field
+    chart = alt.Chart(componets_df).mark_line().encode(
+    x='date:T',
+    y='sales:Q'
     )
+    
     st.altair_chart(chart, use_container_width=True)
 
 with r1c3:
