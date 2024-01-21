@@ -140,8 +140,15 @@ filtered_df = df[
 ]
 
 with r1c2:
-    st.altair_chart(plot_all(filtered_df, x="date", y="sales"),
-                    use_container_width=True)
+    # Assuming your plot_all function returns an Altair chart
+    chart = plot_all(filtered_df, x="date", y="sales")
+
+    # Specify encoding with channel types
+    chart = chart.encode(
+        x=alt.X("date:T", title="Date"),  # "T" specifies a temporal field
+        y=alt.Y("sales:Q", title="Sales"),  # "Q" specifies a quantitative field
+    )
+    st.altair_chart(chart, use_container_width=True)
 
 with r1c3:
     st.header("Hybrid Model Components")
