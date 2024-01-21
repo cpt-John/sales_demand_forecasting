@@ -66,7 +66,7 @@ def process_df():
     df = df.astype({"item": "str"})
     df["delta"] = (df.groupby(["item"])["sales"].pct_change()).fillna(0)
 
-    final_df = df.groupby(["item"]).rolling(rolling_avg_days).mean(numeric_only=True).dropna()
+    final_df = df.drop('date', axis=1).groupby(["item"]).rolling(rolling_avg_days).mean().dropna()
     final_df = final_df.reset_index()
     final_df.set_index("date", inplace=True,  drop=False,)
     return final_df
@@ -172,11 +172,11 @@ if len(select_components) and summation:
     componets_df["total"] = componets_df[select_components].sum(axis=1)
     value_vars = value_vars+["total"]
 componets_df = pd.melt(componets_df, id_vars=['date'], value_vars=value_vars,
-                       var_name='model', value_name='sales').astype({"model": "str"}).set_index("date")
+                       var_name='model', value_name='sales_value').astype({"model": "str"}).set_index("date")
 componets_df["delta"] = componets_df.groupby(
-    ["model"])["sales"].pct_change().fillna(0)
+    ["model"])["sales_value"].pct_change().fillna(0)
 componets_df['date'] = componets_df.index
 
 with r1c3:
-    chart = alt.Chart(componets_df).mark_line().encode(x='date:T',y='sales:Q',color='model:N')
+    chart = alt.Chart(componets_df).mark_line().encode(x='date:T',y='sales_value:Q',color='model:N')
     st.altair_chart(chart, use_container_width=True)
