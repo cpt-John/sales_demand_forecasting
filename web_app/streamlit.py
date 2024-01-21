@@ -140,7 +140,7 @@ filtered_df = df[
 ]
 
 with r1c2:
-    st.altair_chart(plot_all(filtered_df),
+    st.altair_chart(plot_all(filtered_df, x="date", y="sales"),
                     use_container_width=True)
 
 with r1c3:
