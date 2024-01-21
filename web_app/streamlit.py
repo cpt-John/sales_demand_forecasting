@@ -178,5 +178,5 @@ componets_df["delta"] = componets_df.groupby(
 componets_df['date'] = componets_df.index
 
 with r1c3:
-    st.altair_chart(plot_all(componets_df, group="model"),
+    st.altair_chart(plot_all(componets_df,x = "date", y="sales", group="model"),
                     use_container_width=True)
