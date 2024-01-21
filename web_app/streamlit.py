@@ -140,11 +140,7 @@ filtered_df = df[
 ]
 
 with r1c2:
-    chart = alt.Chart(componets_df).mark_line().encode(
-    x='date:T',
-    y='sales:Q'
-    )
-    
+    chart = alt.Chart(filtered_df).mark_line().encode(x='date:T',y='sales:Q')
     st.altair_chart(chart, use_container_width=True)
 
 with r1c3:
